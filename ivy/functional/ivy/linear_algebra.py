@@ -295,10 +295,10 @@ def det(
 @handle_out_argument
 @handle_nestable
 def diagonal(
-        x: Union[ivy.Array, ivy.NativeArray],
-        offset: int = 0,
-        axis1: int = -2,
-        axis2: int = -1
+    x: Union[ivy.Array, ivy.NativeArray],
+    offset: int = 0,
+    axis1: int = -2,
+    axis2: int = -1,
 ) -> ivy.Array:
     """Returns the specified diagonals of a matrix (or a stack of matrices) ``x``.
 

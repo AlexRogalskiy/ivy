@@ -32,7 +32,7 @@ def expand_dims(x: torch.Tensor, axis: int = 0) -> torch.Tensor:
 def flip(
     x: torch.Tensor,
     axis: Optional[Union[int, Tuple[int], List[int]]] = None,
-    out: Optional[torch.Tensor] = None
+    out: Optional[torch.Tensor] = None,
 ) -> torch.Tensor:
     num_dims: int = len(x.shape)
     if not num_dims:

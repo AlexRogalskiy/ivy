@@ -507,7 +507,6 @@ def test_array_method(
     if not isinstance(as_variable_flags, list):
         as_variable_flags = [as_variable_flags]
 
-
     # update variable flags to be compatible with float dtype
     as_variable_flags = [
         v if ivy.is_float_dtype(d) else False
@@ -520,11 +519,20 @@ def test_array_method(
     input_dtypes = ["float32" if d in ivy.invalid_dtypes else d for d in input_dtypes]
 
     # create args
-    calling_args, calling_kwargs, calling_args_np, calling_kwargs_np = create_args(input_dtypes, num_positional_args,
-                                                                                   as_variable_flags, all_as_kwargs_np)
-    constructor_args, constructor_kwargs, constructor_args_np, constructor_kwargs_np = \
-        create_args(input_dtypes_constructor, num_positional_args_constructor, as_variable_flags_constructor,
-                    constructor_kwargs)
+    calling_args, calling_kwargs, calling_args_np, calling_kwargs_np = create_args(
+        input_dtypes, num_positional_args, as_variable_flags, all_as_kwargs_np
+    )
+    (
+        constructor_args,
+        constructor_kwargs,
+        constructor_args_np,
+        constructor_kwargs_np,
+    ) = create_args(
+        input_dtypes_constructor,
+        num_positional_args_constructor,
+        as_variable_flags_constructor,
+        constructor_kwargs,
+    )
 
     # run
     ins = ivy.__dict__[class_name](*constructor_args, **constructor_kwargs)
@@ -537,7 +545,9 @@ def test_array_method(
     # compute the return with a NumPy backend
     ivy.set_backend("numpy")
     ins_np = ivy.__dict__[class_name](*constructor_args_np, **constructor_kwargs_np)
-    ret_from_np = ivy.to_native(ins_np(*calling_args_np, **calling_kwargs_np), nested=True)
+    ret_from_np = ivy.to_native(
+        ins_np(*calling_args_np, **calling_kwargs_np), nested=True
+    )
     ivy.unset_backend()
 
     # assuming value test will be handled manually in the test function
